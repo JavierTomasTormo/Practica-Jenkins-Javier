@@ -1,4 +1,4 @@
-# Documentación: Pipeline de Jenkins para Proyecto React
+# Documentación: Pipeline de Jenkins para Proyecto React (Windows con Jenkins Dockerizado)
 
 ## Introducción a Jenkins
 Jenkins es una herramienta de integración continua y entrega continua (CI/CD) utilizada para automatizar la construcción, prueba y despliegue de aplicaciones. Permite configurar pipelines que automatizan procesos, asegurando calidad y consistencia en los desarrollos.
@@ -8,19 +8,26 @@ Este documento describe cómo implementar un pipeline en Jenkins para un proyect
 ---
 
 ## Requisitos Previos
-1. Tener instalado Jenkins y configurado en un entorno accesible.
-2. Contar con un proyecto React funcional.
-3. Instalar las siguientes herramientas y dependencias:
+1. **Docker Desktop** instalado y configurado en Windows.
+2. **Jenkins Dockerizado**:
+   - Ejecutar Jenkins con Docker:
+     ```bash
+     docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+     ```
+   - Acceder a Jenkins en `http://localhost:8080` y realizar la configuración inicial.
+3. **Proyecto React** funcional en un repositorio Git.
+4. Instalar las siguientes herramientas y dependencias en el proyecto:
    - ESLint
    - Jest
    - CLI de Vercel
-   - Node.js
+   - Node.js y npm
 
 ---
 
 ## Pasos para Configurar el Pipeline
 
 ### 1. Crear una Nueva Rama
+En tu proyecto React, abre la terminal y ejecuta:
 ```bash
 git checkout -b ci_jenkins
 ```
