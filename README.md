@@ -215,12 +215,12 @@ axios.post(`https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage`, {
 ---
 
 ### 5. Documentación en el README.md
-Incluye:
-- Introducción teórica a Jenkins.
-- Descripción de cada stage configurado.
+Incluí:
+- Introducción a Jenkins.
+- Descripción de cada stage.
 - Enlaces:
-  - [Repositorio GitHub](#https://github.com/JavierTomasTormo/Practica-Jenkins-Javier)
-  - [Despliegue en Vercel](#https://jenkins-89xgged5q-javiertomastormos-projects.vercel.app)
+  - [Repositorio GitHub](https://github.com/JavierTomasTormo/Practica-Jenkins-Javier)
+  - [Despliegue en Vercel](https://jenkins-89xgged5q-javiertomastormos-projects.vercel.app)
 
 ---
 
