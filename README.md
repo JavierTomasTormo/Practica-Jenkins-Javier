@@ -1,4 +1,4 @@
-# Documentación: Pipeline de Jenkins para Proyecto React (Windows con Jenkins Dockerizado)
+# Documentación: Pipeline de Jenkins para Proyecto React
 
 ## Introducción a Jenkins
 Jenkins es una herramienta de integración continua y entrega continua (CI/CD) utilizada para automatizar la construcción, prueba y despliegue de aplicaciones. Permite configurar pipelines que automatizan procesos, asegurando calidad y consistencia en los desarrollos.
@@ -8,26 +8,19 @@ Este documento describe cómo implementar un pipeline en Jenkins para un proyect
 ---
 
 ## Requisitos Previos
-1. **Docker Desktop** instalado y configurado en Windows.
-2. **Jenkins Dockerizado**:
-   - Ejecutar Jenkins con Docker:
-     ```bash
-     docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
-     ```
-   - Acceder a Jenkins en `http://localhost:8080` y realizar la configuración inicial.
-3. **Proyecto React** funcional en un repositorio Git.
-4. Instalar las siguientes herramientas y dependencias en el proyecto:
+1. Tener instalado Jenkins y configurado en un entorno accesible.
+2. Contar con un proyecto React funcional.
+3. Instalar las siguientes herramientas y dependencias:
    - ESLint
    - Jest
    - CLI de Vercel
-   - Node.js y npm
+   - Node.js
 
 ---
 
 ## Pasos para Configurar el Pipeline
 
 ### 1. Crear una Nueva Rama
-En tu proyecto React, abre la terminal y ejecuta:
 ```bash
 git checkout -b ci_jenkins
 ```
@@ -35,16 +28,16 @@ git checkout -b ci_jenkins
 ---
 
 ### 2. Instalar el Plugin Build Monitor View
-1. Accede a **Manage Jenkins > Plugin Manager > Available Plugins**.
-2. Busca e instala **Build Monitor View**.
-3. Crea una vista en la pantalla principal de Jenkins:
-   - Haz clic en **New View > Build Monitor View**.
+1. **Manage Jenkins > Plugin Manager > Available Plugins**.
+2. Instalar **Build Monitor View**.
+3. Crear una vista en la pantalla principal de Jenkins:
+   - Click: **New View > Build Monitor View**.
    - Configura para mostrar todos los trabajos disponibles.
 
 ---
 
 ### 3. Configurar el Archivo `Jenkinsfile`
-Crea un archivo `Jenkinsfile` en la raíz del proyecto con la estructura inicial:
+Crear un archivo `Jenkinsfile` en la raíz del proyecto con la estructura inicial:
 ```groovy
 pipeline {
     agent any
@@ -68,7 +61,6 @@ pipeline {
                 }
             }
         }
-        // Otros stages se añaden aquí
     }
 }
 ```
@@ -78,12 +70,12 @@ pipeline {
 ### 4. Añadir Stages
 
 #### Stage: Linter
-1. Instala ESLint:
+1. Instalar ESLint:
    ```bash
    npm install eslint --save-dev
    npx eslint --init
    ```
-2. Añade el siguiente código al `Jenkinsfile`:
+2. Añadir código al `Jenkinsfile`:
 ```groovy
         stage('Linter') {
             steps {
@@ -93,11 +85,11 @@ pipeline {
 ```
 
 #### Stage: Test
-1. Instala Jest y configura los tests:
+1. Instalar Jest y configurar los tests:
    ```bash
    npm install jest --save-dev
    ```
-2. Añade el stage:
+2. Añadir el stage:
 ```groovy
         stage('Test') {
             steps {
@@ -107,7 +99,7 @@ pipeline {
 ```
 
 #### Stage: Build
-1. Añade el stage:
+1. Añadir el stage:
 ```groovy
         stage('Build') {
             steps {
@@ -117,7 +109,7 @@ pipeline {
 ```
 
 #### Stage: Update_Readme
-1. Crea el script `updateReadme.js` en la carpeta `jenkinsScripts`:
+1. Crear el script `updateReadme.js` en la carpeta `jenkinsScripts`:
 ```javascript
 const fs = require('fs');
 const badge = process.argv[2]; // Badge URL
@@ -128,7 +120,7 @@ fs.appendFileSync(
     `\nRESULTADO DE LOS ÚLTIMOS TESTS:\n![Test Badge](${badge})`
 );
 ```
-2. Añade el stage:
+2. Añadir el stage:
 ```groovy
         stage('Update_Readme') {
             steps {
@@ -143,7 +135,7 @@ fs.appendFileSync(
 ```
 
 #### Stage: Push_Changes
-1. Crea el script `pushChanges.sh`:
+1. Crear el script `pushChanges.sh`:
 ```bash
 #!/bin/bash
 git add README.md
@@ -164,7 +156,7 @@ chmod +x jenkinsScripts/pushChanges.sh
 ```
 
 #### Stage: Deploy to Vercel
-1. Configura el CLI de Vercel:
+1. Configurar el CLI de Vercel:
    ```bash
    npm install -g vercel
    vercel login
@@ -191,7 +183,7 @@ chmod +x jenkinsScripts/deployVercel.sh
 ```
 
 #### Stage: Notificació
-1. Crea el script `sendTelegram.js`:
+1. Crear el script `sendTelegram.js`:
 ```javascript
 const axios = require('axios');
 const chatId = process.env.CHAT_ID;
@@ -227,13 +219,13 @@ Incluye:
 - Introducción teórica a Jenkins.
 - Descripción de cada stage configurado.
 - Enlaces:
-  - [Repositorio GitHub](#)
-  - [Despliegue en Vercel](#)
+  - [Repositorio GitHub](#https://github.com/JavierTomasTormo/Practica-Jenkins-Javier)
+  - [Despliegue en Vercel](#https://jenkins-89xgged5q-javiertomastormos-projects.vercel.app)
 
 ---
 
 ### 6. Ejecutar la Pipeline
-1. Accede al proyecto en Jenkins.
+1. Acceder al proyecto en Jenkins.
 2. Ejecuta la pipeline configurando los parámetros requeridos.
 
 ---
